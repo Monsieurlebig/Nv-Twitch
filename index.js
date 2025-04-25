@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const { Hono } = require('hono');
 const { serve } = require('@hono/node-server');
 const PCR = require("puppeteer-chromium-resolver");
