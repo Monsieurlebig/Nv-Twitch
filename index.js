@@ -8,11 +8,7 @@ app.get('/', async (c) => {
   try {
     const url = c.req.query('url') || 'https://apify.com';
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath: '/usr/bin/google-chrome-stable',
-    });
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 }); // Timeout de 60 secondes
 
