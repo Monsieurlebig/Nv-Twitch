@@ -14,20 +14,20 @@ app.get('/', async (c) => {
       executablePath: '/usr/bin/google-chrome-stable',
     });
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 }); // Timeout de 60 secondes
 
     // Vérifier si le bouton "Commencer à regarder" est présent et cliquer dessus si nécessaire
     const button = await page.$('[data-a-target="content-classification-gate-overlay-start-watching-button"]');
     if (button) {
       console.log("Bouton trouvé, on clique dessus...");
       await button.click();
-      await page.waitForTimeout(1000); // Petit délai pour que la vidéo charge
+      await page.waitForTimeout(30000); // Petit délai pour que la vidéo charge
     } else {
       console.log("Pas de bouton, on continue...");
     }
 
     // Attendre que la vidéo soit présente dans la page
-    await page.waitForFunction(() => document.querySelector('video')?.src, { timeout: 15000 });
+    await page.waitForFunction(() => document.querySelector('video')?.src, { timeout: 60000 });
 
     // Essayer d'extraire l'URL de la vidéo
     let videoUrl = await page.$eval('video', video => video.src).catch(() => null);
